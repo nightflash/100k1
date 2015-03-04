@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<title>100 к 1</title>
+	<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.js"></script>
+	<script>
+		console.log(angular);
+		var app = angular.module('game', []);
+		app.controller('main', function($scope) {
+			$scope.gameNumber = 1;
+			$scope.questions = [
+				{
+					text: 'КТо такой вася',
+					answers: [
+						{answer: 'one', points: 34, opened: false},
+						{answer: 'two', points: 21, opened: true},
+						{answer: 'three', points: 11, opened: false},
+						{answer: 'one', points: 34, opened: false},
+						{answer: 'two', points: 21, opened: true},
+						{answer: 'three', points: 11, opened: false}
+					]
+				}
+			];
+			$scope.teams = [
+				{name: 'Rabbits', score: 10, errors: 0},
+				{name: 'Cats', score: 323, errors: 2}
+			];
+
+			$scope.question = $scope.questions[$scope.gameNumber-1];
+		});
+	</script>
+	<style>
+		body {
+			font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+			background-color: #5C89A3;
+			padding-top: 40px;
+		}
+
+		table td {
+			text-align: center;
+			padding-top: 20px;
+		}
+
+		.gameNumber {
+			display: inline-block;
+			background-color: #A93332;
+			color: #DF9F52;
+			border-radius: 10px;
+			font-size: 80px;
+			padding: 5px 15px;
+			font-weight: bold;
+		}
+
+		.error span {
+			display: inline-block;
+			border-radius: 8px;
+			background-color: #DF9F52;
+			width: 50px;
+			height: 35px;
+			margin-top: 2px;
+			border: 1px solid #df8b51;
+		}
+
+		.error.active span {
+			background-color: #F9F48B;
+		}
+
+		.error.active span::before, .error.active span::after {
+			opacity: 0.8;
+		}
+
+		.error span::before {
+			content: '';
+			display: block;
+			height: 8px;
+			width: 54px;
+			background-color: #AF0F07;
+			border-radius: 5px;
+			transform: rotate(32deg);
+			position: relative;
+			top: 13px;
+			left: -2px;
+		}
+
+		.error span::after {
+			content: '';
+			display: block;
+			height: 8px;
+			width: 54px;
+			background-color: #AF0F07;
+			border-radius: 5px;
+			transform: rotate(-32deg);
+			position: relative;
+			top: 5px;
+			left: -2px;
+		}
+
+		@font-face {
+			font-family:"DS Dots Medium";
+			src:url("dsdots.eot?") format("eot"),url("dsdots.woff") format("woff"),url("dsdots.ttf") format("truetype"),url("dsdots.svg#DSDots-Medium") format("svg");
+			font-weight:normal;
+			font-style:normal;
+		}
+
+		.score {
+			padding: 2px 10px;
+			display: inline-block;
+			background-color: #252525;
+			color: #c8d187;
+			font-family:"DS Dots Medium";
+			font-size: 42px;
+		}
+
+		.answer {
+			background-color: #F4CD5F;
+			border-radius: 5px;
+			margin: 0 10px 10px 10px;
+			border: 5px solid #DF9F52;
+			border-top: none;
+			border-bottom: none;
+			position: relative;
+		}
+
+		.answer span {
+			display: inline-block;
+			padding: 5px 5px;
+			font-size: 22px;
+		}
+
+		.answer span.answerNumber {
+			background-color: #B41413;
+			color: #DF9F52;
+			font-weight: bold;
+			border: 8px solid #DF9F52;
+			border-top: none;
+			border-bottom: none;
+		}
+
+		.answer.opened {
+			background-color: #252525;
+			color: white;
+			border: none;
+			text-align: left;
+			padding-left: 5px;
+		}
+
+		.answer .answerPoints {
+			position: absolute;
+			right: 2px;
+			top: 0;
+			font-style: normal;
+		}
+	</style>
+</head>
+<body ng-app="game" ng-controller="main">
+	<div align="center">
+		<table width="790px" height="100%">
+			<tr><td colspan="5"><span class="score">234</span></td></tr>
+			<tr>
+				<td align="left" width="120px"><span class="score">{{teams[0].score}}</span></td>
+				<td width="80px">
+					<div class="gameNumber">{{gameNumber}}</div>
+					<br/><br/><br/><br/>
+					<div ng-repeat="error in [3,2,1]" class="error" ng-class="{'active': (error <= teams[0].errors)}"><span></span></div>
+				</td>
+				<td>
+					<div class="answer" ng-repeat="answer in question.answers" ng-class="{'opened': answer.opened}">
+						<span class="answerNumber" ng-show="!answer.opened">{{$index+1}}</span>
+						<span ng-show="answer.opened">
+							{{answer.answer|uppercase}}
+						</span>
+						<span ng-show="answer.opened" class="answerPoints">{{answer.points}}</span>
+					</div>
+				</td>
+				<td width="80px">
+					<div class="gameNumber">{{gameNumber}}</div>
+					<br/><br/><br/><br/>
+					<div ng-repeat="error in [3,2,1]" class="error" ng-class="{'active': (error <= teams[1].errors)}"><span></span></div>
+				</td>
+				<td align="right" width="120px"><span class="score">{{teams[1].score}}</span></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
