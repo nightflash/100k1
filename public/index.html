@@ -26,6 +26,11 @@
 						});
 			}
 
+
+			$scope.openAnswer = function(team, answerIndex) {
+				$http.get('index.php?gameId=' + gameId + '&openAnswer=' + answerIndex + '&team=' + team);
+			};
+
 			reloadGame();
 			$interval(function() {
 				if(!gameId) {
@@ -179,16 +184,16 @@
 				</td>
 				<td>
 					<div class="answer" ng-repeat="answer in question.answers" ng-class="{'opened': answer.opened}">
-						<button ng-show="admin">Open T1</button>
+						<button ng-show="admin" ng-click="openAnswer(1, $index)">Open T1</button>
 						<span class="answerNumber" ng-show="!answer.opened">
-							<button ng-show="admin">Open</button>
+							<button ng-show="admin" ng-click="openAnswer(-1, $index)">Open</button>
 							{{$index+1}}
 						</span>
 						<span ng-show="answer.opened">
 							{{answer.answer|uppercase}}
 						</span>
 						<span ng-show="answer.opened" class="answerPoints">{{answer.points}}</span>
-						<button ng-show="admin">Open T2</button>
+						<button ng-show="admin" ng-click="openAnswer(2, $index)">Open T2</button>
 					</div>
 				</td>
 				<td width="80px">
