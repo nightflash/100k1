@@ -6,7 +6,7 @@ use \Lib\Mongo as Mongo;
 
 Mongo::setDBName('100k1');
 
-$gameId = intval($_GET['game_id']);
+$gameId = intval($_GET['gameId']);
 
 $game = Mongo::fetch('games', array('_id' => $gameId));
 if(!$game) {
@@ -21,12 +21,12 @@ if(empty($_GET['action'])) {
         case 'openAnswer':
             $questionIndex = $game['currentQuestion'];
             $answerIndex = intval($_GET['answerIndex']);
-            $opener = intval($_GET['team']);
+            $team = intval($_GET['team']);
             updateGame($gameId, array('$set' => array(
-                'questions[' + $questionIndex + '].answers[' + $answerIndex + '].opened' => $opener,
+                'questions[' + $questionIndex + '].answers[' + $answerIndex + '].opened' => $team,
             )));
 
-            if($opener > 0) {
+            if($team > 0) {
                 updateGame($gameId, array('$inc' => array(
                     'score' => $game['questions'][$questionIndex]['answers'][$answerIndex]['points']
                 )));
@@ -34,11 +34,11 @@ if(empty($_GET['action'])) {
             break;
         case 'endQuestion':
             $questionIndex = $game['currentQuestion'];
-            $winTeam = intval($_GET['team']);
+            $team = intval($_GET['team']);
 
-            if($opener > 0) {
+            if($team > 0) {
                 updateGame($gameId, array('$inc' => array(
-                    'teams[' + $winTeam + '].score' => $game['score'],
+                    'teams[' + $team + '].score' => $game['score'],
                 ), '$set' => array(
                     'score' => 0
                 )));
@@ -61,7 +61,7 @@ if(empty($_GET['action'])) {
             $team = intval($_GET['team']);
 
             updateGame($gameId, array('$inc' => array(
-                'teams[' + $winTeam + '].errors' => $game['score'],
+                'teams[' + $team + '].errors' => $game['score'],
             )));
 
             break;
