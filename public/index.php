@@ -23,7 +23,7 @@ if(empty($_GET['action'])) {
             $answerIndex = intval($_GET['answerIndex']);
             $team = intval($_GET['team']);
             updateGame($gameId, array('$set' => array(
-                'questions.' + $questionIndex + '.answers.' + $answerIndex + '.opened' => $team,
+                'questions.' . $questionIndex . '.answers.' . $answerIndex . '.opened' => $team,
             )));
 
             if($team >= 0) {
@@ -37,7 +37,7 @@ if(empty($_GET['action'])) {
 
             if($team > 0) {
                 updateGame($gameId, array('$inc' => array(
-                    'teams.' + $team + '.score' => $game['score'],
+                    'teams.' . $team . '.score' => $game['score'],
                 ), '$set' => array(
                     'score' => 0
                 )));
@@ -59,7 +59,7 @@ if(empty($_GET['action'])) {
             $team = intval($_GET['team']);
 
             updateGame($gameId, array('$inc' => array(
-                'teams.' + $team + '.errors' => $game['score']
+                'teams.' . $team . '.errors' => $game['score']
             )));
 
             break;
