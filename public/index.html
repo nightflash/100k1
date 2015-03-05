@@ -187,10 +187,10 @@
 					<div class="answer" ng-repeat="answer in question.answers" ng-class="{'opened': answer.opened}">
 						<button ng-show="admin && !answer.opened" ng-click="openAnswer(0, $index)">Open T1</button>
 						<span class="answerNumber" ng-show="!answer.opened">
-							<button ng-show="admin" ng-click="openAnswer(-1, $index)">Open</button>
+							<button ng-show="admin && !answer.opened" ng-click="openAnswer(-1, $index)">Open</button>
 							{{$index+1}}
 						</span>
-						<span ng-show="answer.opened && !answer.opened">
+						<span ng-show="answer.opened">
 							{{answer.text|uppercase}}
 						</span>
 						<span ng-show="answer.opened" class="answerPoints">{{answer.points}}</span>
