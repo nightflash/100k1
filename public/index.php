@@ -36,13 +36,11 @@ if(empty($_GET['action'])) {
         case 'endQuestion':
             $team = intval($_GET['team']);
 
-            if($team > 0) {
-                updateGame($gameId, array('$inc' => array(
-                    'teams.' . $team . '.score' => $game['score'],
-                ), '$set' => array(
-                    'score' => 0
-                )));
-            }
+            updateGame($gameId, array('$inc' => array(
+                'teams.' . $team . '.score' => $game['score'],
+            ), '$set' => array(
+                'score' => 0
+            )));
             break;
         case 'nextQuestion':
             if($game['score']) {
