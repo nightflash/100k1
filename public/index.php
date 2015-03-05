@@ -21,9 +21,9 @@ if(empty($_GET['action'])) {
         case 'openAnswer':
             $questionIndex = $game['currentQuestion'];
             $answerIndex = intval($_GET['answerIndex']);
-            $team = processTeamIndex($_GET['team']);
+            $team = intval($_GET['team']);
             updateGame($gameId, array('$set' => array(
-                'questions.' + $questionIndex + '.answers.' + $answerIndex + '.opened' => $team,
+                'questions.' + $questionIndex + '.answers.' + $answerIndex + '.opened' => 't' . $team,
             )));
 
             if($team > 0) {
@@ -33,7 +33,7 @@ if(empty($_GET['action'])) {
             }
             break;
         case 'endQuestion':
-            $team = processTeamIndex($_GET['team']);
+            $team = intval($_GET['team']);
 
             if($team > 0) {
                 updateGame($gameId, array('$inc' => array(
@@ -56,7 +56,7 @@ if(empty($_GET['action'])) {
             )));
             break;
         case 'teamError':
-            $team = processTeamIndex($_GET['team']);
+            $team = intval($_GET['team']);
 
             updateGame($gameId, array('$inc' => array(
                 'teams.' + $team + '.errors' => $game['score']
@@ -92,13 +92,4 @@ function updateGame($gameId, $update = array()) {
     return Mongo::update('games', array(
         'game_id' => $gameId
     ), $update);
-}
-
-function processTeamIndex($team) {
-    $team = intval($team);
-    if($team > 0) {
-        return $team - 1;
-    } else {
-        return $team;
-    }
 }
