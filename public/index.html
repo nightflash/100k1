@@ -28,7 +28,7 @@
 
 
 			$scope.openAnswer = function(team, answerIndex) {
-				$http.get('index.php?gameId=' + gameId + '&openAnswer=' + answerIndex + '&team=' + team);
+				$http.get('index.php?gameId=' + gameId + '&action=openAnswer&answerIndex=' + answerIndex + '&team=' + team);
 			};
 
 			reloadGame();
