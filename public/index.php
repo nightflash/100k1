@@ -23,7 +23,7 @@ if(empty($_GET['action'])) {
             $answerIndex = intval($_GET['answerIndex']);
             $team = intval($_GET['team']);
 
-            $game['questions'][$questionIndex]['answers'][$answerIndex]['opened'] = $team;
+            $game['questions'][$questionIndex]['answers'][$answerIndex]['opened'] = true;
             updateGame($gameId, array('$set' => array(
                 'questions' => $game['questions'],
             )));
