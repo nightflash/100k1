@@ -185,7 +185,7 @@
 				</td>
 				<td>
 					<div class="answer" ng-repeat="answer in question.answers" ng-class="{'opened': answer.opened}">
-						<button ng-show="admin && !answer.opened" ng-click="openAnswer(0, $index)">Open T1</button>
+						<button ng-show="admin && !answer.opened" ng-click="openAnswer(0, $index)">SCORE</button>
 						<span class="answerNumber" ng-show="!answer.opened">
 							<button ng-show="admin && !answer.opened" ng-click="openAnswer(-1, $index)">Open</button>
 							{{$index+1}}
@@ -194,7 +194,7 @@
 							{{answer.text|uppercase}}
 						</span>
 						<span ng-show="answer.opened" class="answerPoints">{{answer.points}}</span>
-						<button ng-show="admin && !answer.opened" ng-click="openAnswer(1, $index)">Open T2</button>
+						<button ng-show="admin && !answer.opened" ng-click="openAnswer(-1, $index)">SHOW</button>
 					</div>
 				</td>
 				<td width="80px">
