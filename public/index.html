@@ -27,7 +27,17 @@
 
 
 			$scope.openAnswer = function(team, answerIndex) {
-				$http.get('index.php?gameId=' + gameId + '&action=openAnswer&answerIndex=' + answerIndex + '&team=' + team);
+				$http.get('index.php?gameId=' + gameId + '&action=openAnswer&answerIndex=' + answerIndex + '&team=' + team).then(function() {
+					reloadGame();
+				});
+			};
+
+			$scope.isOpened = function(status) {
+				if(status === undefined) {
+					return false;
+				} else {
+					return true;
+				}
 			};
 
 			reloadGame();
@@ -182,16 +192,16 @@
 					<div ng-repeat="error in [3,2,1]" class="error" ng-class="{'active': (error <= game.teams[0].errors)}"><span></span></div>
 				</td>
 				<td>
-					<div class="answer" ng-repeat="answer in question.answers" ng-class="{'opened': answer.opened}">
+					<div class="answer" ng-repeat="answer in question.answers" ng-class="{'opened': isOpened(answer.opened)}">
 						<button ng-show="admin" ng-click="openAnswer(0, $index)">Open T1</button>
-						<span class="answerNumber" ng-show="!answer.opened">
+						<span class="answerNumber" ng-show="!isOpened(answer.opened)">
 							<button ng-show="admin" ng-click="openAnswer(-1, $index)">Open</button>
 							{{$index+1}}
 						</span>
-						<span ng-show="answer.opened">
+						<span ng-show="isOpened(answer.opened)">
 							{{answer.text|uppercase}}
 						</span>
-						<span ng-show="answer.opened" class="answerPoints">{{answer.points}}</span>
+						<span ng-show="isOpened(answer.opened)" class="answerPoints">{{answer.points}}</span>
 						<button ng-show="admin" ng-click="openAnswer(1, $index)">Open T2</button>
 					</div>
 				</td>
