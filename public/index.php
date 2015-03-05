@@ -13,13 +13,14 @@ if(!$game) {
     jsonError(1, 'Game not exists');
 }
 
+$questionIndex = $game['currentQuestion'];
+
 // Get current game state
 if(empty($_GET['action'])) {
     jsonResponse($game);
 } else {
     switch($_GET['action']) {
         case 'openAnswer':
-            $questionIndex = $game['currentQuestion'];
             $answerIndex = intval($_GET['answerIndex']);
             $team = intval($_GET['team']);
             updateGame($gameId, array('$set' => array(
@@ -28,7 +29,7 @@ if(empty($_GET['action'])) {
 
             if($team >= 0) {
                 updateGame($gameId, array('$inc' => array(
-                    'score' => $game['questions'][$questionIndex]['answers'][$answerIndex]['points']
+                    'score' => $game['questions'][$questionIndex]['answers'][$answerIndex]['points'] * ($questionIndex <= 2 ? $questionIndex + 1 : 1)
                 )));
             }
             break;
@@ -48,12 +49,16 @@ if(empty($_GET['action'])) {
                 jsonError(2, 'Score is not empty, you must choose winner first');
             }
 
-            updateGame($gameId, array('$inc' => array(
-                'currentQuestion' => 1
-            ), '$set' => array(
-                'teams[0].errors' => 0,
-                'teams[1].errors' => 0
-            )));
+            if($questionIndex < count($game['questions']) - 1) {
+                updateGame($gameId, array('$inc' => array(
+                    'currentQuestion' => 1
+                ), '$set' => array(
+                    'teams[0].errors' => 0,
+                    'teams[1].errors' => 0
+                )));
+            } else {
+                jsonError(0, 'No more questions');
+            }
             break;
         case 'teamError':
             $team = intval($_GET['team']);

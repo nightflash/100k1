@@ -7,7 +7,7 @@
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.js"></script>
 	<script>
 		var app = angular.module('game', []);
-		app.controller('main', function($scope, $interval, $http, $location) {
+		app.controller('main', function($scope, $interval, $http, $location, orderByFilter) {
 			var gameId = $location.search().gameId || 1;
 			$scope.admin = $location.search().admin;
 			var loading = false;
@@ -19,6 +19,7 @@
 							console.log(data);
 							$scope.game = data;
 							$scope.question = $scope.game.questions[$scope.game.currentQuestion];
+							$scope.question.answers = orderByFilter($scope.question.answers, 'points');
 						}).
 						error(function(data, status, headers, config) {
 							loading = false;
@@ -28,6 +29,12 @@
 
 			$scope.openAnswer = function(team, answerIndex) {
 				$http.get('index.php?gameId=' + gameId + '&action=openAnswer&answerIndex=' + answerIndex + '&team=' + team).then(function() {
+					reloadGame();
+				});
+			};
+
+			$scope.endQuestion = function(team) {
+				$http.get('index.php?gameId=' + gameId + '&action=endQuestion&team=' + team).then(function() {
 					reloadGame();
 				});
 			};
