@@ -15,7 +15,7 @@ if(!$game) {
 
 // Get current game state
 if(empty($_GET['action'])) {
-    jsonResponse(Mongo::fetch('games', array('game_id' => $gameId)));
+    jsonResponse($game);
 } else {
     switch($_GET['action']) {
         case 'openAnswer':
