@@ -64,7 +64,7 @@ if(empty($_GET['action'])) {
             $team = intval($_GET['team']);
 
             updateGame($gameId, array('$inc' => array(
-                'teams.' . $team . '.errors' => $game['score']
+                'teams.' . $team . '.errors' => 1
             )));
 
             break;
