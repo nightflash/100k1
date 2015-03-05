@@ -39,6 +39,18 @@
 				});
 			};
 
+			$scope.nextQuestion = function() {
+				$http.get('index.php?gameId=' + gameId + '&action=nextQuestion').then(function() {
+					reloadGame();
+				});
+			};
+
+			$scope.teamError = function(team) {
+				$http.get('index.php?gameId=' + gameId + '&action=teamError&team=' + team).then(function() {
+					reloadGame();
+				});
+			};
+
 			reloadGame();
 			$interval(function() {
 				if(!gameId) {
@@ -189,6 +201,7 @@
 					<div class="gameNumber">{{game.currentQuestion + 1}}</div>
 					<br/><br/><br/><br/>
 					<div ng-repeat="error in [3,2,1]" class="error" ng-class="{'active': (error <= game.teams[0].errors)}"><span></span></div>
+					<button ng-show="admin" ng-click="teamError(0)">ERROR</button>
 				</td>
 				<td>
 					<div class="answer" ng-repeat="answer in question.answers" ng-class="{'opened': answer.opened}">
@@ -207,6 +220,7 @@
 					<div class="gameNumber">{{game.currentQuestion + 1}}</div>
 					<br/><br/><br/><br/>
 					<div ng-repeat="error in [3,2,1]" class="error" ng-class="{'active': (error <= game.teams[1].errors)}"><span></span></div>
+					<button ng-show="admin" ng-click="teamError(1)">ERROR</button>
 				</td>
 				<td align="right" width="120px"><span class="score">{{game.teams[1].score}}</span></td>
 			</tr>
