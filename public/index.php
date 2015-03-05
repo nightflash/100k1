@@ -8,7 +8,7 @@ Mongo::setDBName('100k1');
 
 $gameId = intval($_GET['gameId']);
 
-$game = Mongo::fetch('games', array('_id' => $gameId));
+$game = Mongo::fetchOne('games', array('_id' => $gameId));
 if(!$game) {
     jsonError(1, 'Game not exists');
 }
