@@ -1,4 +1,4 @@
-db.games({_id: 1}).remove();
+db.games.remove({_id: 1});
 db.games.insert({
   _id: 1,
   teams: [{name: '', score: 0, errors: 0}, {name: '', score: 0, errors: 0}],
