@@ -1,5 +1,9 @@
 <?php
+namespace Core;
 require_once('../mongo.php');
+
+use \Lib\Mongo as Mongo;
+
 Mongo::setDBName('100k1');
 
 $gameId = intval($_GET['game_id']);

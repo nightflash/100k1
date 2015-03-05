@@ -1,4 +1,5 @@
 <?php
+namespace Lib;
 class Mongo {
     private static $connection = null;
     private static $db_name = 'test';
