@@ -6,10 +6,9 @@
 	<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.js"></script>
 	<script>
-		console.log(angular);
 		var app = angular.module('game', []);
 		app.controller('main', function($scope, $interval, $http, $location) {
-			var gameId = $location.search().gameId;
+			var gameId = $location.search().gameId || 1;
 			$scope.admin = $location.search().admin;
 			var loading = false;
 			function reloadGame() {
@@ -190,7 +189,7 @@
 							{{$index+1}}
 						</span>
 						<span ng-show="answer.opened">
-							{{answer.answer|uppercase}}
+							{{answer.text|uppercase}}
 						</span>
 						<span ng-show="answer.opened" class="answerPoints">{{answer.points}}</span>
 						<button ng-show="admin" ng-click="openAnswer(2, $index)">Open T2</button>
