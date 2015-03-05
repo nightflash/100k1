@@ -33,7 +33,6 @@ if(empty($_GET['action'])) {
             }
             break;
         case 'endQuestion':
-            $questionIndex = $game['currentQuestion'];
             $team = intval($_GET['team']);
 
             if($team > 0) {
@@ -57,11 +56,10 @@ if(empty($_GET['action'])) {
             )));
             break;
         case 'teamError':
-            $questionIndex = $game['currentQuestion'];
             $team = intval($_GET['team']);
 
             updateGame($gameId, array('$inc' => array(
-                'teams.' + $team + '.errors' => $game['score'],
+                'teams.' + $team + '.errors' => $game['score']
             )));
 
             break;
@@ -69,7 +67,7 @@ if(empty($_GET['action'])) {
 
     $error = Mongo::getLastError();
     if($error) {
-        jsonError(0, $error)
+        jsonError(0, $error);
     } else {
         jsonResponse(true);
     }
