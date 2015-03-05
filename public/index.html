@@ -9,31 +9,30 @@
 		console.log(angular);
 		var app = angular.module('game', []);
 		app.controller('main', function($scope, $interval, $http, $location) {
-			$loading = false;
+			var gameId = $location.search().gameId;
+			var loading = false;
 			function reloadGame() {
-				$loading = true;
+				loading = true;
 				$http.get('index.php?gameId=' + gameId).
 						success(function(data, status, headers, config) {
-							$loading = false;
+							loading = false;
 							console.log(data);
 							$scope.game = data;
 							$scope.question = $scope.game.questions[$scope.game.currentQuestion];
 						}).
 						error(function(data, status, headers, config) {
-							$loading = false;
+							loading = false;
 						});
 			}
 
 			reloadGame();
 			$interval(function() {
-				var gameId = $location.search().gameId;
-
 				if(!gameId) {
 					console.log('Define gameId param in location');
 					return;
 				}
 
-				if($loading) {
+				if(loading) {
 					console.log('Prev loading in progress');
 					return;
 				}
