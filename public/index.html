@@ -19,7 +19,6 @@
 							console.log(data);
 							$scope.game = data;
 							$scope.question = $scope.game.questions[$scope.game.currentQuestion];
-							$scope.question.answers = orderByFilter($scope.question.answers, 'points');
 						}).
 						error(function(data, status, headers, config) {
 							loading = false;

@@ -20,8 +20,8 @@ db.games.insert({
       text: 'Принтер зажевал бумагу, почему?',
       answers: [
         {text: 'Голоден', points: 37},
-        {text: 'Сломан', points: 11},
         {text: 'Потому', points: 18},
+        {text: 'Сломан', points: 11},
         {text: 'Толстая бумага', points: 6},
         {text: 'Плохой/козел', points: 3},
         {text: 'YouTrack упал', points: 2},
@@ -30,8 +30,8 @@ db.games.insert({
     {
       text: 'О чем можно говорить с девушкой в трамвае?',
       answers: [
-        {text: 'О транспорте', points: 17},
         {text: 'О погоде', points: 18},
+        {text: 'О транспорте', points: 17},
         {text: 'О вечном/смысле жизни', points: 13},
         {text: 'О билете', points: 10},
         {text: 'О книгах/поэзии', points: 5},
@@ -42,11 +42,11 @@ db.games.insert({
       text: 'На завтраке не было каши, почему?',
       answers: [
         {text: 'Съели', points: 28},
+        {text: 'Санкции/кризис', points: 7},
+        {text: 'Проспал', points: 5},
         {text: 'Сгорела', points: 6},
         {text: 'Мама уехала', points: 4},
-        {text: 'Санкции/кризис', points: 7},
-        {text: 'Это был обед', points: 4},
-        {text: 'Проспал', points: 5}
+        {text: 'Это был обед', points: 4}
       ]
     },
     {

@@ -28,8 +28,16 @@ if(empty($_GET['action'])) {
             )));
 
             if($team >= 0) {
+                if($questionIndex <= 3) {
+                    // включая четверную игру
+                    $score = $game['questions'][$questionIndex]['answers'][$answerIndex]['points'] * ($questionIndex + 1);
+                } else {
+                    // игра наоборот
+                    $score = ($answerIndex + 1) * 20;
+                }
+
                 updateGame($gameId, array('$inc' => array(
-                    'score' => $game['questions'][$questionIndex]['answers'][$answerIndex]['points'] * ($questionIndex <= 2 ? $questionIndex + 1 : 1)
+                    'score' => $score
                 )));
             }
             break;
