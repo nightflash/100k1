@@ -8,27 +8,25 @@
 	<script>
 		console.log(angular);
 		var app = angular.module('game', []);
-		app.controller('main', function($scope) {
-			$scope.gameNumber = 1;
-			$scope.questions = [
-				{
-					text: 'КТо такой вася',
-					answers: [
-						{answer: 'one', points: 34, opened: false},
-						{answer: 'two', points: 21, opened: true},
-						{answer: 'three', points: 11, opened: false},
-						{answer: 'one', points: 34, opened: false},
-						{answer: 'two', points: 21, opened: true},
-						{answer: 'three', points: 11, opened: false}
-					]
-				}
-			];
-			$scope.teams = [
-				{name: 'Rabbits', score: 10, errors: 0},
-				{name: 'Cats', score: 323, errors: 2}
-			];
+		app.controller('main', function($scope, $interval, $http, $location) {
+			$interval(function() {
+				var gameId = $location.search('gameId');
 
-			$scope.question = $scope.questions[$scope.gameNumber-1];
+				if(!gameId) {
+					console.log('Define gameId param in location');
+					return;
+				}
+
+				console.log('Start loading data');
+				$http.get('index.php?gameId=' + gameId).
+					success(function(data, status, headers, config) {
+						console.log(data);
+							$scope.game = data;
+							$scope.question = $scope.game.questions[$scope.game.currentQuestion];
+					}).
+					error(function(data, status, headers, config) {
+					});
+			}, 2000);
 		});
 	</script>
 	<style>
@@ -157,13 +155,13 @@
 <body ng-app="game" ng-controller="main">
 	<div align="center">
 		<table width="790px" height="100%">
-			<tr><td colspan="5"><span class="score">234</span></td></tr>
+			<tr><td colspan="5"><span class="score">{{game.score}}</span></td></tr>
 			<tr>
-				<td align="left" width="120px"><span class="score">{{teams[0].score}}</span></td>
+				<td align="left" width="120px"><span class="score">{{game.teams[0].score}}</span></td>
 				<td width="80px">
-					<div class="gameNumber">{{gameNumber}}</div>
+					<div class="gameNumber">{{game.currentQuestion + 1}}</div>
 					<br/><br/><br/><br/>
-					<div ng-repeat="error in [3,2,1]" class="error" ng-class="{'active': (error <= teams[0].errors)}"><span></span></div>
+					<div ng-repeat="error in [3,2,1]" class="error" ng-class="{'active': (error <= game.teams[0].errors)}"><span></span></div>
 				</td>
 				<td>
 					<div class="answer" ng-repeat="answer in question.answers" ng-class="{'opened': answer.opened}">
@@ -177,9 +175,9 @@
 				<td width="80px">
 					<div class="gameNumber">{{gameNumber}}</div>
 					<br/><br/><br/><br/>
-					<div ng-repeat="error in [3,2,1]" class="error" ng-class="{'active': (error <= teams[1].errors)}"><span></span></div>
+					<div ng-repeat="error in [3,2,1]" class="error" ng-class="{'active': (error <= game.teams[1].errors)}"><span></span></div>
 				</td>
-				<td align="right" width="120px"><span class="score">{{teams[1].score}}</span></td>
+				<td align="right" width="120px"><span class="score">{{game.teams[1].score}}</span></td>
 			</tr>
 		</table>
 	</div>
