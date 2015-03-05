@@ -10,6 +10,7 @@
 		var app = angular.module('game', []);
 		app.controller('main', function($scope, $interval, $http, $location) {
 			var gameId = $location.search().gameId;
+			$scope.admin = $location.search().admin;
 			var loading = false;
 			function reloadGame() {
 				loading = true;
@@ -178,11 +179,16 @@
 				</td>
 				<td>
 					<div class="answer" ng-repeat="answer in question.answers" ng-class="{'opened': answer.opened}">
-						<span class="answerNumber" ng-show="!answer.opened">{{$index+1}}</span>
+						<button ng-show="admin">Open T1</button>
+						<span class="answerNumber" ng-show="!answer.opened">
+							<button ng-show="admin">Open</button>
+							{{$index+1}}
+						</span>
 						<span ng-show="answer.opened">
 							{{answer.answer|uppercase}}
 						</span>
 						<span ng-show="answer.opened" class="answerPoints">{{answer.points}}</span>
+						<button ng-show="admin">Open T2</button>
 					</div>
 				</td>
 				<td width="80px">
