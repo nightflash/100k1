@@ -22,10 +22,8 @@ if(empty($_GET['action'])) {
             $questionIndex = $game['currentQuestion'];
             $answerIndex = intval($_GET['answerIndex']);
             $team = intval($_GET['team']);
-
-            $game['questions'][$questionIndex]['answers'][$answerIndex]['opened'] = true;
             updateGame($gameId, array('$set' => array(
-                'questions' => $game['questions'],
+                'questions.' . $questionIndex . '.answers.' . $answerIndex . '.opened' => true,
             )));
 
             if($team >= 0) {
@@ -37,10 +35,10 @@ if(empty($_GET['action'])) {
         case 'endQuestion':
             $team = intval($_GET['team']);
 
-            $game['teams'][$team]['score'] += $game['score'];
             if($team > 0) {
-                updateGame($gameId, array('$set' => array(
-                    'teams' => $game['teams'],
+                updateGame($gameId, array('$inc' => array(
+                    'teams.' . $team . '.score' => $game['score'],
+                ), '$set' => array(
                     'score' => 0
                 )));
             }
@@ -50,21 +48,18 @@ if(empty($_GET['action'])) {
                 jsonError(2, 'Score is not empty, you must choose winner first');
             }
 
-
-            $game['teams'][0]['errors'] = 0;
-            $game['teams'][1]['errors'] = 0;
             updateGame($gameId, array('$inc' => array(
                 'currentQuestion' => 1
             ), '$set' => array(
-                'teams' => $game['teams']
+                'teams[0].errors' => 0,
+                'teams[1].errors' => 0
             )));
             break;
         case 'teamError':
             $team = intval($_GET['team']);
 
-            $game['teams'][$team]['errors']++;
-            updateGame($gameId, array('$set' => array(
-                'teams' => $game['teams']
+            updateGame($gameId, array('$inc' => array(
+                'teams.' . $team . '.errors' => $game['score']
             )));
 
             break;
