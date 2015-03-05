@@ -95,6 +95,6 @@ function jsonError($errorCode = 0, $errorMessage = '') {
 
 function updateGame($gameId, $update = array()) {
     return Mongo::update('games', array(
-        'game_id' => $gameId
+        '_id' => $gameId
     ), $update);
 }
