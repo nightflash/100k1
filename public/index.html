@@ -193,7 +193,7 @@
 </head>
 <body ng-app="game" ng-controller="main">
 	<div align="center">
-		<button ng-click="nextQuestion()">NEXT QUESTION</button>
+		<button ng-click="nextQuestion()" ng-show="admin">NEXT QUESTION</button>
 		<table width="790px" height="100%">
 			<tr><td colspan="5"><span class="score">{{game.score}}</span></td></tr>
 			<tr>
