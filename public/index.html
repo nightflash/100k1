@@ -9,6 +9,22 @@
 		console.log(angular);
 		var app = angular.module('game', []);
 		app.controller('main', function($scope, $interval, $http, $location) {
+			$loading = false;
+			function reloadGame() {
+				$loading = true;
+				$http.get('index.php?gameId=' + gameId).
+						success(function(data, status, headers, config) {
+							$loading = false;
+							console.log(data);
+							$scope.game = data;
+							$scope.question = $scope.game.questions[$scope.game.currentQuestion];
+						}).
+						error(function(data, status, headers, config) {
+							$loading = false;
+						});
+			}
+
+			reloadGame();
 			$interval(function() {
 				var gameId = $location.search().gameId;
 
@@ -17,15 +33,13 @@
 					return;
 				}
 
+				if($loading) {
+					console.log('Prev loading in progress');
+					return;
+				}
+
 				console.log('Start loading data');
-				$http.get('index.php?gameId=' + gameId).
-					success(function(data, status, headers, config) {
-						console.log(data);
-							$scope.game = data;
-							$scope.question = $scope.game.questions[$scope.game.currentQuestion];
-					}).
-					error(function(data, status, headers, config) {
-					});
+				reloadGame();
 			}, 2000);
 		});
 	</script>
@@ -173,7 +187,7 @@
 					</div>
 				</td>
 				<td width="80px">
-					<div class="gameNumber">{{gameNumber}}</div>
+					<div class="gameNumber">{{game.currentQuestion + 1}}</div>
 					<br/><br/><br/><br/>
 					<div ng-repeat="error in [3,2,1]" class="error" ng-class="{'active': (error <= game.teams[1].errors)}"><span></span></div>
 				</td>
