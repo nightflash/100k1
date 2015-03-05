@@ -59,8 +59,8 @@ if(empty($_GET['action'])) {
                 updateGame($gameId, array('$inc' => array(
                     'currentQuestion' => 1
                 ), '$set' => array(
-                    'teams[0].errors' => 0,
-                    'teams[1].errors' => 0
+                    'teams.0.errors' => 0,
+                    'teams.1.errors' => 0
                 )));
             } else {
                 jsonError(0, 'No more questions');

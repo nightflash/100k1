@@ -201,7 +201,7 @@
 					<span class="score">{{game.teams[0].score}}</span>
 				</td>
 				<td width="80px">
-					<div class="gameNumber">{{game.currentQuestion + 1}}</div>
+					<div class="gameNumber">{{game.currentQuestion < 5 ? game.currentQuestion + 1: '@'}}</div>
 					<br/><br/><br/><br/>
 					<div ng-repeat="error in [3,2,1]" class="error" ng-class="{'active': (error <= game.teams[0].errors)}"><span></span></div>
 					<button ng-show="admin" ng-click="teamError(0)">ERROR</button>
@@ -220,7 +220,7 @@
 					</div>
 				</td>
 				<td width="80px">
-					<div class="gameNumber">{{game.currentQuestion + 1}}</div>
+					<div class="gameNumber">{{game.currentQuestion < 5 ? game.currentQuestion + 1: '@'}}</div>
 					<br/><br/><br/><br/>
 					<div ng-repeat="error in [3,2,1]" class="error" ng-class="{'active': (error <= game.teams[1].errors)}"><span></span></div>
 					<button ng-show="admin" ng-click="teamError(1)">ERROR</button>
