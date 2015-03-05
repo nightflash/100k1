@@ -10,7 +10,7 @@
 		var app = angular.module('game', []);
 		app.controller('main', function($scope, $interval, $http, $location) {
 			$interval(function() {
-				var gameId = $location.search('gameId');
+				var gameId = $location.search().gameId;
 
 				if(!gameId) {
 					console.log('Define gameId param in location');
