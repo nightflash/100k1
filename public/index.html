@@ -22,7 +22,7 @@
 							if($scope.game) {
 								for (var i = 0; i <= 1; i++) {
 									if ($scope.game.teams[i].errors < data.teams[i].errors) {
-										$('#errorSound').get(0).play()
+										document.getElementById('errorSound').play()
 									}
 								}
 							}
@@ -48,7 +48,7 @@
 								}
 
 								if (openedNew > openedNow) {
-									$('#openedSound').get(0).play()
+									document.getElementById('openSound').play()
 								}
 							}
 						}).
