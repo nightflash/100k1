@@ -17,8 +17,34 @@
 						success(function(data, status, headers, config) {
 							loading = false;
 							console.log(data);
+
+
+							for(var i =0; i <= 1; i++) {
+								if($scope.game.teams[i].errors < data.teams[i].errors) {
+									$('#errorSound').get(0).play()
+								}
+							}
+
+							var openedNow = 0;
+							for(var i =0; i < $scope.question.answers; i++) {
+								if($scope.question.answers[i].opened) {
+									openedNow++;
+								}
+							}
+
 							$scope.game = data;
 							$scope.question = $scope.game.questions[$scope.game.currentQuestion];
+
+							var openedNew = 0;
+							for(var i =0; i < $scope.question.answers; i++) {
+								if($scope.question.answers[i].opened) {
+									openedNew++;
+								}
+							}
+
+							if(openedNew > openedNow) {
+								$('#openedSound').get(0).play()
+							}
 						}).
 						error(function(data, status, headers, config) {
 							loading = false;
