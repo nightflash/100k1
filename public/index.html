@@ -27,9 +27,9 @@
 								}
 							}
 
-							if($scope.game) {
-								var openedNow = 0;
-								for (var i = 0; i < $scope.question.answers; i++) {
+							var openedNow = 0;
+							if($scope.question) {
+								for (var i = 0; i < $scope.question.answers.length; i++) {
 									if ($scope.question.answers[i].opened) {
 										openedNow++;
 									}
@@ -39,9 +39,9 @@
 							$scope.game = data;
 							$scope.question = $scope.game.questions[$scope.game.currentQuestion];
 
-							if($scope.game) {
+							if($scope.question) {
 								var openedNew = 0;
-								for (var i = 0; i < $scope.question.answers; i++) {
+								for (var i = 0; i < $scope.question.answers.length; i++) {
 									if ($scope.question.answers[i].opened) {
 										openedNew++;
 									}
