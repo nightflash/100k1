@@ -191,7 +191,10 @@
 	</style>
 </head>
 <body ng-app="game" ng-controller="main">
+	<audio src="error.mp3" id="errorSound">
+	<audio src="open.mp3" id="openSound">
 	<div align="center">
+		<div ng-show="admin">{{question.text}}</div>
 		<button ng-click="nextQuestion()" ng-show="admin">NEXT QUESTION</button>
 		<table width="790px" height="100%">
 			<tr><td colspan="5"><span class="score">{{game.score}}</span></td></tr>

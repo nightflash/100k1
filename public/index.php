@@ -74,6 +74,9 @@ if(empty($_GET['action'])) {
             )));
 
             break;
+        case 'resetGame':
+            exec('mongo 100k1 ');
+            break;
     }
 
     $error = Mongo::getLastError();
